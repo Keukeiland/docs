@@ -1,0 +1,8 @@
+site_name: Keukeiland Docs
+dev_addr: '0.0.0.0:80'
+
+theme:
+  name: 'material'
+
+plugins:
+  - search
