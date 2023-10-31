@@ -20,4 +20,5 @@ venv.bak/
 
 # Generated files
 build/
-docs/*
+documentation/
+references/
