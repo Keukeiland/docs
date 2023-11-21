@@ -64,7 +64,7 @@ def read(path, filename, origin, docstr_open, docstr_close, docstr_markup, func_
     last_line = None
 
     strs = []
-
+    tmp = None
     with open(path, "rt") as file:
         for number, line in enumerate(file):
             line = line.strip()
@@ -72,11 +72,13 @@ def read(path, filename, origin, docstr_open, docstr_close, docstr_markup, func_
             if in_str:
                 if line.endswith(docstr_close):
                     in_str = False
-                    if func_def_after: tmp.func = next(file).strip()
+                    if func_def_after:
+                        try: tmp.func = next(file).strip()
+                        except StopIteration: tmp.func = ''
                     tmp.origin += [item.split('(')[0] for item in tmp.func.split(' ') if "(" in item]
                     strs.append(tmp)
                 else:
-                    tmp.desc += '\n' + line.strip().lstrip(docstr_markup)
+                    tmp.desc += '\n' + line.strip().lstrip(docstr_markup).replace('<','`').replace('>','`')
             
             elif line.startswith(docstr_open):
                 in_str = True
